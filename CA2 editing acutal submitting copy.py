@@ -91,3 +91,4 @@ Cap, Quantity of Crypto Bought, the Buy In Price of Crypto and the Market Price 
 Crypto and the Market Price of the Crypto.
 • You may want to check that the Cryptocurrency Name entered does not already exist in your database."""
 
+#test
