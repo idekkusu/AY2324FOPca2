@@ -205,12 +205,14 @@ def AmendCrypto():
                 input_string = "Please only input 1 to " + str(len(list)-1) +  " for your selection or 'E' to exit: "
                 continue
             else: #If input is valid
-                    for i in range(len(list[int(x)])):
+                    i = 0
+                    while i <= len(list[int(x)]):
                         if i != 0:
-                            print(str(i) +'.',list2[i].ljust(25)+':',list[int(x)][i])
+                            print(str(i) +'.',list2[i].ljust(25)+':',list[int(x)][i-1])
                         else:
                             print()
-                            print(list2[i].ljust(25)+'   :',list[int(x)][i])
+                            print(list2[i].ljust(25)+'   :',int(x))
+                        i+=1
                     print(list2[6])
                     
                     input_string2 = "What do you want to edit?: "
