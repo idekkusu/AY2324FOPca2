@@ -89,8 +89,12 @@ elif int(option) == 2:
 
 #OPTION 3
 elif int(option) == 3:
+Total Invested = Quantity x Buy In Price
+• Invested Portfolio Size = Percentage of Total Invested/ Sum of Total Invested 
+• Total Current Value = Quantity x Market Price
+• Profit/ Loss = Total Current Value – Total Invested 
+• Current Portfolio Size = Percentage of Total Current Value / Sum of Total Current Valu
 '''
-
 
 #Initialising Variables
 option = ""
@@ -181,6 +185,8 @@ def AddCrypto():
     list.append(empty)
     print("-"*80)
     input("Addition Successful! Press Enter to Continue")
+    print(list)
+
 
 #Option 3: Amend CryptoCurrency
 def AmendCrypto():
@@ -229,12 +235,11 @@ def AmendCrypto():
                                             list[int(x)][int(y)] = z
                                             input("Amendment Successful! Press Enter to Continue")
                                             break
-
                                     case "2":
                                         input_string3 = "(2) Enter new Market Cap of Crypto: "
                                         while True:
                                             z = input(input_string3)
-                                            caselist=("high","low","mid")#using this ignores the bracket nonsense
+                                            caselist=("high","low","mid")#using this ignores the bracket nonsense1
                                             if z.lower() not in caselist:
                                                 input_string2 = "Please key in a valid edit (High, Low, Mid)"
                                                 continue
@@ -304,7 +309,7 @@ def AmendCrypto():
             else: #check for other alphabetical input that is not E
                 input_string = "Please only input 1 to " + str(len(list)-1) +  " for your selection or 'E' to exit: "
                 continue
-      
+
         
 
 #Option 4: Remove CryptoCurrency
@@ -331,12 +336,22 @@ def RemoveCrypto():
             list.pop(int(x))
             input("Your Choice has been Successfully Removed! Press Enter to Continue")
             break
-
+        
 
 #Option 5: Crypto Portfolio Statement
 def CryptoPortfolioStatement():
-    print('why')
-
+    currentadditionlist=[]
+    totalvalue=[]
+    for i in range(1,6):#starting at 1 since we dont we take the headings in caluclation
+        totalinvested=list[i][2]*list[i][3]
+        Sumcurrentvalue=list[i][2]*list[i][4]
+        currentadditionlist.append(Sumcurrentvalue)
+        totalvalue.append(totalinvested)
+        profitloss=list[i][4]/list[i][3]
+    currentportfoilosize=Sumcurrentvalue/sum(currentadditionlist)*100
+    totalportfoilosize=totalinvested/sum(totalvalue)*100
+    extrafunction=[totalinvested,totalportfoilosize,Sumcurrentvalue,profitloss,Sumcurrentvalue]
+    return totalvalue
 #Option 6: Student 1
 def Student1():
     print('why')
@@ -363,7 +378,7 @@ while True:
         case "4":
             RemoveCrypto()
         case "5":
-            break
+            CryptoPortfolioStatement()
         case "6":
             break
         case "7":
