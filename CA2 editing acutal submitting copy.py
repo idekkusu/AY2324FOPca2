@@ -342,16 +342,36 @@ def RemoveCrypto():
 def CryptoPortfolioStatement():
     currentadditionlist=[]
     totalvalue=[]
-    for i in range(1,6):#starting at 1 since we dont we take the headings in caluclation
+    for i in range(1,7):#starting at 1 since we dont take the headings in caluclation
         totalinvested=list[i][2]*list[i][3]
         Sumcurrentvalue=list[i][2]*list[i][4]
         currentadditionlist.append(Sumcurrentvalue)
         totalvalue.append(totalinvested)
-        profitloss=list[i][4]/list[i][3]
-    currentportfoilosize=Sumcurrentvalue/sum(currentadditionlist)*100
-    totalportfoilosize=totalinvested/sum(totalvalue)*100
-    extrafunction=[totalinvested,totalportfoilosize,Sumcurrentvalue,profitloss,Sumcurrentvalue]
-    return totalvalue
+    v=["total invested","invested ","Portfolio Size","Total Current","Value Profit/ Loss Current","Portfolio Size"]
+    list[0].extend(v)
+    for i in range(1,7):#starting at 1 since we dont take the headings in caluclation
+        totalinvested=list[i][2]*list[i][3]
+        Sumcurrentvalue=list[i][2]*list[i][4] 
+        profitloss=Sumcurrentvalue-totalinvested
+        currentportfoilosize=Sumcurrentvalue/sum(currentadditionlist)*100
+        totalportfoilosize=totalinvested/sum(totalvalue)*100
+        extrafunction=[totalinvested,str(round(totalportfoilosize,2))+"%",Sumcurrentvalue,profitloss,str(round(currentportfoilosize,2))+"%"]
+        list[i].extend(extrafunction)
+    for row_index, row in enumerate(list):
+        printedrow = ''
+        for col_index, col in enumerate(row):
+            if col_index == 0:
+                if row_index == 0:
+                    text = "No"
+                    printedrow += text.ljust(7)
+                else:
+                    printedrow += str(row_index).ljust(7)
+                    printedrow += str(col).ljust(17)
+            else:
+                printedrow += str(col).ljust(17)
+        print(printedrow)
+
+
 #Option 6: Student 1
 def Student1():
     print('why')
