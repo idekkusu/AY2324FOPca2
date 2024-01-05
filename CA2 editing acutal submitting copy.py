@@ -115,7 +115,6 @@ list2 = ["Index","Name","Market Cap","Quantity Bought","Buy In Price","Market Pr
 
 
 
-
 #Main Menu Display
 def Menu():
     print("-"*80)
@@ -137,22 +136,23 @@ def Menu():
 
 #Option 1: Display Cryptocurrency 
 def DisplayCrypto():
-    for row in list:
+    option1list=list.copy()
+    for row in option1list:
         printedrow = ''
-        #print(str(list[list.index(row)][0])+str(space(5-len(str(list[list.index(row)][0])))),str(list[list.index(row)][1])+str(space(15-len(str(list[list.index(row)][1])))), str(list[list.index(row)][2])+str(space(15-len(str(list[list.index(row)][2])))), str(list[list.index(row)][3])+str(space(15-len(str(list[list.index(row)][3])))), str(list[list.index(row)][4])+str(space(15-len(str(list[list.index(row)][4])))), str(list[list.index(row)][5])+str(space(9-len(str(list[list.index(row)][0])))))
         for col in row:
-            if row.index(col)== 0:
-                    if list.index(row) == 0:
-                        text = "No"
-                        printedrow += text.ljust(7)
-                    else:
-                        printedrow += str(list.index(row)).ljust(7)
-                        printedrow += str(col).ljust(17)
+            if row.index(col) == 0:
+                if option1list.index(row) == 0:
+                    text = "No"
+                    printedrow += text.ljust(7)
+                else:
+                    printedrow += str(option1list.index(row)).ljust(7)
+                    printedrow += str(col).ljust(17)
             else:
                 printedrow += str(col).ljust(17)
         print(printedrow)
     print("-"*80)
     input("Press Enter to Continue")
+
 
 #Option 2: Add CryptoCurrency
 def AddCrypto():
@@ -339,7 +339,8 @@ def RemoveCrypto():
             input("Your Choice has been Successfully Removed! Press Enter to Continue")
             break
         
-
+option5list=list.copy()
+#Option 5: Crypto Portfolio Statement
 #Option 5: Crypto Portfolio Statement
 def CryptoPortfolioStatement():
     currentadditionlist=[]
@@ -350,16 +351,16 @@ def CryptoPortfolioStatement():
         currentadditionlist.append(Sumcurrentvalue)
         totalvalue.append(totalinvested)
     v=["total invested","invested ","Portfolio Size","Total Current","Value Profit/ Loss Current","Portfolio Size"]
-    list[0].extend(v)
+    option5list[0].extend(v)
     for i in range(1,7):#starting at 1 since we dont take the headings in caluclation
         totalinvested=list[i][2]*list[i][3]
-        Sumcurrentvalue=list[i][2]*list[i][4] 
+        Sumcurrentvalue=list[i][2]*list[i][4]
         profitloss=Sumcurrentvalue-totalinvested
         currentportfoilosize=Sumcurrentvalue/sum(currentadditionlist)*100
         totalportfoilosize=totalinvested/sum(totalvalue)*100
         extrafunction=[totalinvested,str(round(totalportfoilosize,2))+"%",Sumcurrentvalue,profitloss,str(round(currentportfoilosize,2))+"%"]
-        list[i].extend(extrafunction)
-    for row_index, row in enumerate(list):
+        option5list[i].extend(extrafunction)
+    for row_index, row in enumerate(option5list):
         printedrow = ''
         for col_index, col in enumerate(row):
             if col_index == 0:
