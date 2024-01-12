@@ -95,6 +95,8 @@ Total Invested = Quantity x Buy In Price
 • Profit/ Loss = Total Current Value – Total Invested 
 • Current Portfolio Size = Percentage of Total Current Value / Sum of Total Current Valu
 '''
+#random libraries we require , copy , rich for bolded text
+import copy 
 
 #Initialising Variables
 option = ""
@@ -102,18 +104,26 @@ option = ""
 exit = False
 
 input_string = "Select an option: "
-
-list=[["Name", "Capitalization", "QtyBought", "Bought Price", "Current Price"],
-["Bitcoin", "High", 15, 38000, 62000],
-["Ethereum", "High", 90, 4200, 3500],
-["Solana", "Mid", 60, 260, 110],
-["Decentraland", "Mid", 30000, 1.5, 5],
-["The Sandbox", "Mid", 25000, 2, 4],
-["Dogecoin", "Low", 55000, 0.4, 0.15]]
-
+a=r"C:\Users\jeeva\OneDrive\Documents\CA2 elective list.csv"
+filePath=a
+file = open(filePath,encoding='utf-8-sig')
+data = file.readlines()
+list = []
+# start from 1 to ignore 1st line which is the header
+for i in range(len(data)):
+  line = data[i]
+  cols = line.split(",")
+  Number=cols[0]
+  name = cols[1]
+  Capitalization = cols[2].strip()
+  QtyBought=cols[3].strip()
+  Bought_Price=cols[4].strip()
+  Current_Price=cols[5].strip()
+  x=[name,Capitalization,QtyBought,Bought_Price,Current_Price]
+  list.append(x)
+print(list)
 list2 = ["Index","Name","Market Cap","Quantity Bought","Buy In Price","Market Price","E. Edit Complete. Exit"]
-
-
+#from rich import printprint("[bold red]This text is bold and red.[/bold]")"""
 
 #Main Menu Display
 def Menu():
@@ -140,17 +150,10 @@ def DisplayCrypto():
     for row in option1list:
         printedrow = ''
         for col in row:
-            if row.index(col) == 0:
-                if option1list.index(row) == 0:
-                    text = "No"
-                    printedrow += text.ljust(7)
-                else:
-                    printedrow += str(option1list.index(row)).ljust(7)
-                    printedrow += str(col).ljust(17)
-            else:
+            if True:
                 printedrow += str(col).ljust(17)
         print(printedrow)
-    print("-"*80)
+    print("-"*100)
     input("Press Enter to Continue")
 
 
@@ -311,9 +314,6 @@ def AmendCrypto():
             else: #check for other alphabetical input that is not E
                 input_string = "Please only input 1 to " + str(len(list)-1) +  " for your selection or 'E' to exit: "
                 continue
-
-        
-
 #Option 4: Remove CryptoCurrency
 def RemoveCrypto():
     print('No - CryptoCurrency')
@@ -339,27 +339,28 @@ def RemoveCrypto():
             input("Your Choice has been Successfully Removed! Press Enter to Continue")
             break
         
-option5list=list.copy()
-#Option 5: Crypto Portfolio Statement
+
 #Option 5: Crypto Portfolio Statement
 def CryptoPortfolioStatement():
+    option5list=copy.deepcopy(list)#making a list that wouldnt change 
     currentadditionlist=[]
     totalvalue=[]
     for i in range(1,7):#starting at 1 since we dont take the headings in caluclation
-        totalinvested=list[i][2]*list[i][3]
-        Sumcurrentvalue=list[i][2]*list[i][4]
+        totalinvested = float(list[i][2]) * float(list[i][3])
+        Sumcurrentvalue = float(list[i][2]) * float(list[i][4])
         currentadditionlist.append(Sumcurrentvalue)
         totalvalue.append(totalinvested)
     v=["total invested","invested ","Portfolio Size","Total Current","Value Profit/ Loss Current","Portfolio Size"]
     option5list[0].extend(v)
     for i in range(1,7):#starting at 1 since we dont take the headings in caluclation
-        totalinvested=list[i][2]*list[i][3]
-        Sumcurrentvalue=list[i][2]*list[i][4]
+        totalinvested = float(list[i][2]) * float(list[i][3])
+        Sumcurrentvalue = float(list[i][2]) * float(list[i][4])
         profitloss=Sumcurrentvalue-totalinvested
         currentportfoilosize=Sumcurrentvalue/sum(currentadditionlist)*100
         totalportfoilosize=totalinvested/sum(totalvalue)*100
         extrafunction=[totalinvested,str(round(totalportfoilosize,2))+"%",Sumcurrentvalue,profitloss,str(round(currentportfoilosize,2))+"%"]
-        option5list[i].extend(extrafunction)
+        if len(option5list)==len(list):#here making sure the option5list doesnt add to itself ,only the first time it will extend. got a few issues tho 
+            option5list[i].extend(extrafunction)
     for row_index, row in enumerate(option5list):
         printedrow = ''
         for col_index, col in enumerate(row):
