@@ -20,8 +20,8 @@ print("-"*80)
 option=input("Select an option: ")
 
 
-#Cryptocurrency List
-list=[["No","Name", "Capitalization", "QtyBought", "Bought Price", "Current Price"],
+#Cryptocurrency cryptolist
+cryptolist=[["No","Name", "Capitalization", "QtyBought", "Bought Price", "Current Price"],
 [1, "Bitcoin", "High", 15, 38000, 62000],
 [2, "Ethereum", "High", 90, 4200, 3500],
 [3, "Solana", "Mid", 60, 260, 110],
@@ -48,9 +48,9 @@ if option.lower()=='e':
     print("Exited ")
 elif int(option)== 1:
     #thinking process: u need a set number of spaces , so number of space- length of word 
-    for row in list:
+    for row in cryptolist:
         printedrow = ''
-        #print(str(list[list.index(row)][0])+str(space(5-len(str(list[list.index(row)][0])))),str(list[list.index(row)][1])+str(space(15-len(str(list[list.index(row)][1])))), str(list[list.index(row)][2])+str(space(15-len(str(list[list.index(row)][2])))), str(list[list.index(row)][3])+str(space(15-len(str(list[list.index(row)][3])))), str(list[list.index(row)][4])+str(space(15-len(str(list[list.index(row)][4])))), str(list[list.index(row)][5])+str(space(9-len(str(list[list.index(row)][0])))))
+        #print(str(cryptolist[cryptolist.index(row)][0])+str(space(5-len(str(cryptolist[cryptolist.index(row)][0])))),str(cryptolist[cryptolist.index(row)][1])+str(space(15-len(str(cryptolist[cryptolist.index(row)][1])))), str(cryptolist[cryptolist.index(row)][2])+str(space(15-len(str(cryptolist[cryptolist.index(row)][2])))), str(cryptolist[cryptolist.index(row)][3])+str(space(15-len(str(cryptolist[cryptolist.index(row)][3])))), str(cryptolist[cryptolist.index(row)][4])+str(space(15-len(str(cryptolist[cryptolist.index(row)][4])))), str(cryptolist[cryptolist.index(row)][5])+str(space(9-len(str(cryptolist[cryptolist.index(row)][0])))))
         for col in row:
             if row.index(col)== 0:
                 printedrow += str(col).ljust(7)
@@ -62,16 +62,16 @@ elif int(option)== 1:
 elif int(option) == 2:
     while True:
         a = input("Enter Cryptocurrency Name :")
-        for i in range(len(list)):
-            if a.title() == list[i][1]:
-                print(list[i][1], "already exists, please enter a new cryptocurrency")
+        for i in range(len(cryptolist)):
+            if a.title() == cryptolist[i][1]:
+                print(cryptolist[i][1], "already exists, please enter a new cryptocurrency")
                 break
         else:
             break
     while True:
         b = input("Enter Market Cap of Crypto: High, Mid, Low :")
-        caselist=("high","low","mid")#using this ignores the bracket nonscne
-        if b.lower() in caselist:
+        casecryptolist=("high","low","mid")#using this ignores the bracket nonscne
+        if b.lower() in casecryptolist:
             break
         else:
             print("Please enter the correct word ")
@@ -85,7 +85,7 @@ elif int(option) == 2:
         else:
             break
     empty = [a, b, c, d, e]
-    list.append(empty)
+    cryptolist.append(empty)
 
 #OPTION 3
 elif int(option) == 3:
@@ -108,7 +108,7 @@ a=r"C:\Users\jeeva\OneDrive\Documents\CA2 elective list.csv"
 filePath=a
 file = open(filePath,encoding='utf-8-sig')
 data = file.readlines()
-list = []
+cryptolist = []
 # start from 1 to ignore 1st line which is the header
 for i in range(len(data)):
   line = data[i]
@@ -120,9 +120,9 @@ for i in range(len(data)):
   Bought_Price=cols[4].strip()
   Current_Price=cols[5].strip()
   x=[name,Capitalization,QtyBought,Bought_Price,Current_Price]
-  list.append(x)
-print(list)
-list2 = ["Index","Name","Market Cap","Quantity Bought","Buy In Price","Market Price","E. Edit Complete. Exit"]
+  cryptolist.append(x)
+print(cryptolist)
+cryptolist2 = ["Index","Name","Market Cap","Quantity Bought","Buy In Price","Market Price","E. Edit Complete. Exit"]
 #from rich import printprint("[bold red]This text is bold and red.[/bold]")"""
 
 #Main Menu Display
@@ -146,8 +146,8 @@ def Menu():
 
 #Option 1: Display Cryptocurrency 
 def DisplayCrypto():
-    option1list=list.copy()
-    for row in option1list:
+    option1cryptolist=cryptolist.copy()
+    for row in option1cryptolist:
         printedrow = ''
         for col in row:
             if True:
@@ -159,19 +159,19 @@ def DisplayCrypto():
 
 #Option 2: Add CryptoCurrency
 def AddCrypto():
-    f = len(list)
+    f = len(cryptolist)
     while True:
         a = input("Enter Cryptocurrency Name :")
-        for i in range(len(list)):
-            if a.title() == list[i][1]:
-                print(list[i][1], "already exists, please enter a new cryptocurrency")
+        for i in range(len(cryptolist)):
+            if a.title() == cryptolist[i][1]:
+                print(cryptolist[i][1], "already exists, please enter a new cryptocurrency")
                 break
         else:
             break
     while True:
         b = input("Enter Market Cap of Crypto: High, Mid, Low :")
-        caselist=("high","low","mid")#using this ignores the bracket nonscne
-        if b.lower() in caselist:
+        casecryptolist=("high","low","mid")#using this ignores the bracket nonscne
+        if b.lower() in casecryptolist:
             break
         else:
             print("Please enter the correct word ")
@@ -185,46 +185,46 @@ def AddCrypto():
         else:
             break
     empty = [f, a, b.capitalize(), c, d, e]
-    list.append(empty)
+    cryptolist.append(empty)
     print("-"*80)
     input("Addition Successful! Press Enter to Continue")
-    print(list)
+    print(cryptolist)
 
 
 #Option 3: Amend CryptoCurrency
 def AmendCrypto():
     print('No - CryptoCurrency')
     print('-'*80)
-    for i in range(len(list)):
+    for i in range(len(cryptolist)):
         if i == 0:
             continue
-        print(i ,"-", list[i][0])
-    input_string = "Enter 1 to " + str(len(list)-1) +  " for your selection or 'E' to exit: "
+        print(i ,"-", cryptolist[i][0])
+    input_string = "Enter 1 to " + str(len(cryptolist)-1) +  " for your selection or 'E' to exit: "
     print('-'*80)
     while True:
         x = input(input_string)
         if x.isnumeric(): #Checking if input is numeric
-            if int(x) < 1 or int(x)>len(list)-1: #checking for out of range
-                input_string = "Please only input 1 to " + str(len(list)-1) +  " for your selection or 'E' to exit: "
+            if int(x) < 1 or int(x)>len(cryptolist)-1: #checking for out of range
+                input_string = "Please only input 1 to " + str(len(cryptolist)-1) +  " for your selection or 'E' to exit: "
                 continue
             else: #If input is valid
                     i = 0
-                    while i <= len(list[int(x)]):
+                    while i <= len(cryptolist[int(x)]):
                         if i != 0:
-                            print(str(i) +'.',list2[i].ljust(25)+':',list[int(x)][i-1])
+                            print(str(i) +'.',cryptolist2[i].ljust(25)+':',cryptolist[int(x)][i-1])
                         else:
                             print()
-                            print(list2[i].ljust(25)+'   :',int(x))
+                            print(cryptolist2[i].ljust(25)+'   :',int(x))
                         i+=1
-                    print(list2[6])
+                    print(cryptolist2[6])
                     
                     input_string2 = "What do you want to edit?: "
                     while True:
                         y = input(input_string2)
 
                         if y.isnumeric(): #Checking if input is numeric
-                            if int(y) < 1 or int(y)>len(list2)-2: #checking for out of range
-                                input_string2 = "Please only input 1 to " + str(len(list2)-2) +  " for your selection or 'E' to exit: "
+                            if int(y) < 1 or int(y)>len(cryptolist2)-2: #checking for out of range
+                                input_string2 = "Please only input 1 to " + str(len(cryptolist2)-2) +  " for your selection or 'E' to exit: "
                                 continue
                             else: #if y is a valid input and is not "E"
                                 match y:
@@ -232,25 +232,25 @@ def AmendCrypto():
                                         input_string3 = "(1) Enter new Name of Crypto: "
                                         while True:
                                             z = input(input_string3)
-                                            for i in range(len(list)):
-                                                if z.title() == list[i][1]:
-                                                    print(list[i][1], "already exists, please enter a new cryptocurrency")
-                                                    input_string3 = str(list[i][1]) + " already exists, please enter a new cryptocurrency"
+                                            for i in range(len(cryptolist)):
+                                                if z.title() == cryptolist[i][1]:
+                                                    print(cryptolist[i][1], "already exists, please enter a new cryptocurrency")
+                                                    input_string3 = str(cryptolist[i][1]) + " already exists, please enter a new cryptocurrency"
                                                     continue
-                                            list[int(x)][int(y)] = z
+                                            cryptolist[int(x)][int(y)] = z
                                             input("Amendment Successful! Press Enter to Continue")
                                             break
                                     case "2":
                                         input_string3 = "(2) Enter new Market Cap of Crypto: "
                                         while True:
                                             z = input(input_string3)
-                                            caselist=("high","low","mid")#using this ignores the bracket nonsense1
-                                            if z.lower() not in caselist:
+                                            casecryptolist=("high","low","mid")#using this ignores the bracket nonsense1
+                                            if z.lower() not in casecryptolist:
                                                 input_string2 = "Please key in a valid edit (High, Low, Mid)"
                                                 continue
                                             z = z.capitalize()
                                             break
-                                        list[int(x)][int(y)] = z
+                                        cryptolist[int(x)][int(y)] = z
                                         input("Amendment Successful! Press Enter to Continue")
                                         break
                                         
@@ -264,7 +264,7 @@ def AmendCrypto():
                                                 input_string3 = "Please key in a valid input: "
                                                 continue
                                             else:
-                                                list[int(x)][int(y)] = z
+                                                cryptolist[int(x)][int(y)] = z
                                                 input("Amendment Successful! Press Enter to Continue")
                                                 break
 
@@ -278,7 +278,7 @@ def AmendCrypto():
                                                 input_string3 = "Please key in a valid input: "
                                                 continue
                                             else:
-                                                list[int(x)][int(y)] = z
+                                                cryptolist[int(x)][int(y)] = z
                                                 input("Amendment Successful! Press Enter to Continue")
                                                 break
                                     case "5": 
@@ -291,7 +291,7 @@ def AmendCrypto():
                                                 input_string3 = "Please key in a valid input: "
                                                 continue
                                             else:
-                                                list[int(x)][int(y)] = z
+                                                cryptolist[int(x)][int(y)] = z
                                                 input("Amendment Successful! Press Enter to Continue")
                                                 break
                                                 
@@ -304,7 +304,7 @@ def AmendCrypto():
                             if y.upper() == 'E': #check for E
                                 break
                             else: #check for other alphabetical input that is not E
-                                input_string2 = "Please only input 1 to " + str(len(list2)-2) +  " for your selection or 'E' to exit: "
+                                input_string2 = "Please only input 1 to " + str(len(cryptolist2)-2) +  " for your selection or 'E' to exit: "
                                 continue
                     break
 
@@ -312,22 +312,22 @@ def AmendCrypto():
             if x.upper() == 'E': #check for E
                 break
             else: #check for other alphabetical input that is not E
-                input_string = "Please only input 1 to " + str(len(list)-1) +  " for your selection or 'E' to exit: "
+                input_string = "Please only input 1 to " + str(len(cryptolist)-1) +  " for your selection or 'E' to exit: "
                 continue
 #Option 4: Remove CryptoCurrency
 def RemoveCrypto():
     print('No - CryptoCurrency')
     print('-'*80)
-    for i in range(len(list)):
+    for i in range(len(cryptolist)):
         if i == 0:
             continue
-        print(i ,"-", list[i][0])
+        print(i ,"-", cryptolist[i][0])
     print('-'*80)
-    input_string = "Enter 1 to " + str(len(list)-1) +  " for your selection or 'E' to exit: "
+    input_string = "Enter 1 to " + str(len(cryptolist)-1) +  " for your selection or 'E' to exit: "
     while True:
         x = input(input_string)
-        if x.isnumeric() and (int(x) < 1 or int(x)>len(list)-1): #Checking if input is within numeric options
-            input_string = "Please only input 1 to " + str(len(list)-1) +  " for your selection or 'E' to exit: "
+        if x.isnumeric() and (int(x) < 1 or int(x)>len(cryptolist)-1): #Checking if input is within numeric options
+            input_string = "Please only input 1 to " + str(len(cryptolist)-1) +  " for your selection or 'E' to exit: "
             continue
         elif x.isalpha() and x.upper()!= "E": # checking for other inputs
             input_string = "Please key in a valid input: "
@@ -335,42 +335,40 @@ def RemoveCrypto():
         elif x.upper() == "E": # checking for E
             break
         else: #valid option
-            list.pop(int(x))
+            cryptolist.pop(int(x))
             input("Your Choice has been Successfully Removed! Press Enter to Continue")
             break
         
 
 #Option 5: Crypto Portfolio Statement
+
+option5cryptolist=copy.deepcopy(cryptolist)#making a cryptolist that wouldnt change 
+currentadditioncryptolist=[]
+totalvalue=[]
+for i in range(1,7):#starting at 1 since we dont take the headings in caluclation
+    totalinvested = float(cryptolist[i][2]) * float(cryptolist[i][3])
+    Sumcurrentvalue = float(cryptolist[i][2]) * float(cryptolist[i][4])
+    currentadditioncryptolist.append(Sumcurrentvalue)
+    totalvalue.append(totalinvested)
+v=["total invested","invested ","Portfolio Size","Total Current","Value Profit/ Loss Current","Portfolio Size"]
+option5cryptolist[0].extend(v)
+
+for i in range(1,7):#starting at 1 since we dont take the headings in caluclation
+    totalinvested = float(cryptolist[i][2]) * float(cryptolist[i][3])
+    Sumcurrentvalue = float(cryptolist[i][2]) * float(cryptolist[i][4])
+    profitloss=Sumcurrentvalue-totalinvested
+    currentportfoilosize=Sumcurrentvalue/sum(currentadditioncryptolist)*100
+    totalportfoilosize=totalinvested/sum(totalvalue)*100
+    extrafunction=[totalinvested,str(round(totalportfoilosize,2))+"%",Sumcurrentvalue,profitloss,str(round(currentportfoilosize,2))+"%"]
+    if len(option5cryptolist)==len(cryptolist):#here making sure the option5cryptolist doesnt add to itself ,only the first time it will extend. got a few issues tho 
+        option5cryptolist[i].extend(extrafunction)
 def CryptoPortfolioStatement():
-    option5list=copy.deepcopy(list)#making a list that wouldnt change 
-    currentadditionlist=[]
-    totalvalue=[]
-    for i in range(1,7):#starting at 1 since we dont take the headings in caluclation
-        totalinvested = float(list[i][2]) * float(list[i][3])
-        Sumcurrentvalue = float(list[i][2]) * float(list[i][4])
-        currentadditionlist.append(Sumcurrentvalue)
-        totalvalue.append(totalinvested)
-    v=["total invested","invested ","Portfolio Size","Total Current","Value Profit/ Loss Current","Portfolio Size"]
-    option5list[0].extend(v)
-    for i in range(1,7):#starting at 1 since we dont take the headings in caluclation
-        totalinvested = float(list[i][2]) * float(list[i][3])
-        Sumcurrentvalue = float(list[i][2]) * float(list[i][4])
-        profitloss=Sumcurrentvalue-totalinvested
-        currentportfoilosize=Sumcurrentvalue/sum(currentadditionlist)*100
-        totalportfoilosize=totalinvested/sum(totalvalue)*100
-        extrafunction=[totalinvested,str(round(totalportfoilosize,2))+"%",Sumcurrentvalue,profitloss,str(round(currentportfoilosize,2))+"%"]
-        if len(option5list)==len(list):#here making sure the option5list doesnt add to itself ,only the first time it will extend. got a few issues tho 
-            option5list[i].extend(extrafunction)
-    for row_index, row in enumerate(option5list):
+    for row_index, row in enumerate(option5cryptolist):
         printedrow = ''
-        for col_index, col in enumerate(row):
-            if col_index == 0:
-                if row_index == 0:
-                    text = "No"
-                    printedrow += text.ljust(7)
-                else:
-                    printedrow += str(row_index).ljust(7)
-                    printedrow += str(col).ljust(17)
+        for col_index, col in enumerate(row):#got error, theres a spacing here + the first section supposed to be No
+            if col_index == 0:         
+                printedrow += str(row_index).ljust(7)
+                printedrow += str(col).ljust(17)
             else:
                 printedrow += str(col).ljust(17)
         print(printedrow)
@@ -379,6 +377,35 @@ def CryptoPortfolioStatement():
 #Option 6: Student 1
 def Student1():
     print('why')
+    option7cryptolist=[]
+    for i in range(1,len(option5cryptolist)):
+        option7cryptolist.append(option5cryptolist[i][0])
+        option7cryptolist.append(option5cryptolist[i][8])
+    print(option7cryptolist)
+    import plotly.graph_objects as go
+
+    # Your cryptolist
+    data_cryptolist = option7cryptolist
+    # Convert the cryptolist to a dictionary
+    data_dict = {data_cryptolist[i]: data_cryptolist[i + 1] for i in range(0, len(data_cryptolist), 2)}
+    # Create cryptolists for x and y values
+    x_values = list(data_dict.keys())
+    y_values = list(data_dict.values())
+    labels = ['{0}: {1}'.format(x, y) for x, y in zip(x_values, y_values)]
+    # Create a waterfall chart
+    fig = go.Figure(go.Waterfall(
+        x = x_values,
+        y = y_values,
+        text = labels,
+        measure = ["relative"] * len(x_values),
+        base = 0,
+        decreasing = {"marker":{"color":"Red"}},
+        increasing = {"marker":{"color":"Green"}},
+        totals = {"marker":{"color":"Blue"}}
+    ))
+
+    # Show the figure
+    fig.show()
 
 #Option 7: Student 2
 def Student2():
@@ -404,6 +431,7 @@ while True:
         case "5":
             CryptoPortfolioStatement()
         case "6":
+            Student1()
             break
         case "7":
             break
