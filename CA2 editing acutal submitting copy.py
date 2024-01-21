@@ -1,102 +1,6 @@
-'''
-#Menu Display
-print("-"*80)
-print("\tClass 02\n \t1. Jeeva \n \t2. Edison") 
-print("-"*80)
-print("\tCryptocurrency Portfolio Application Main Menu")
-print("-"*80)
-intro_text="""1. Display Cryptocurrency
-2. Add Cryptocurrency
-3. Amend Cryptocurrency
-4. Remove Cryptocurrency
-5. Crypto Portfolio Statement
-6. <Student 1 to propose a new function>
-7. <Student 2 to propose a new function>
-E. Exit Main Menu"""
-
-
-print(intro_text)
-print("-"*80)
-option=input("Select an option: ")
-
-
-#Cryptocurrency cryptolist
-cryptolist=[["No","Name", "Capitalization", "QtyBought", "Bought Price", "Current Price"],
-[1, "Bitcoin", "High", 15, 38000, 62000],
-[2, "Ethereum", "High", 90, 4200, 3500],
-[3, "Solana", "Mid", 60, 260, 110],
-[4, "Decentraland", "Mid", 30000, 1.5, 5],
-[5, "The Sandbox", "Mid", 25000, 2, 4],
-[6, "Dogecoin", "Low", 55000, 0.4, 0.15]]
-
-#OPTION 1
-spaceneed=10
-#must make function that can print number of spaces 
-def space(x):
-    return (" "*x)
-#rmb can do string multiplication , dont use for loop as the x doest change properly 
-while True:
-    if option.lower()=='e':
-        break
-    elif option.isnumeric():
-        if int(option) <=7 and int(option) >=1:
-            break
-    option=input("Please select one of the available options: ")
-
-
-if option.lower()=='e':
-    print("Exited ")
-elif int(option)== 1:
-    #thinking process: u need a set number of spaces , so number of space- length of word 
-    for row in cryptolist:
-        printedrow = ''
-        #print(str(cryptolist[cryptolist.index(row)][0])+str(space(5-len(str(cryptolist[cryptolist.index(row)][0])))),str(cryptolist[cryptolist.index(row)][1])+str(space(15-len(str(cryptolist[cryptolist.index(row)][1])))), str(cryptolist[cryptolist.index(row)][2])+str(space(15-len(str(cryptolist[cryptolist.index(row)][2])))), str(cryptolist[cryptolist.index(row)][3])+str(space(15-len(str(cryptolist[cryptolist.index(row)][3])))), str(cryptolist[cryptolist.index(row)][4])+str(space(15-len(str(cryptolist[cryptolist.index(row)][4])))), str(cryptolist[cryptolist.index(row)][5])+str(space(9-len(str(cryptolist[cryptolist.index(row)][0])))))
-        for col in row:
-            if row.index(col)== 0:
-                printedrow += str(col).ljust(7)
-            else:
-                printedrow += str(col).ljust(17)
-        print(printedrow)
-
-#OPTION 2
-elif int(option) == 2:
-    while True:
-        a = input("Enter Cryptocurrency Name :")
-        for i in range(len(cryptolist)):
-            if a.title() == cryptolist[i][1]:
-                print(cryptolist[i][1], "already exists, please enter a new cryptocurrency")
-                break
-        else:
-            break
-    while True:
-        b = input("Enter Market Cap of Crypto: High, Mid, Low :")
-        casecryptolist=("high","low","mid")#using this ignores the bracket nonscne
-        if b.lower() in casecryptolist:
-            break
-        else:
-            print("Please enter the correct word ")
-    while True:
-        try:
-            c = int(input("Enter Quantity of Crypto Bought = "))
-            d = float(input("Enter Buy In Price of Crypto = "))
-            e = float(input("Enter Market Price of Crypto = "))
-        except ValueError :
-            print("Please enter again ")
-        else:
-            break
-    empty = [a, b, c, d, e]
-    cryptolist.append(empty)
-
-#OPTION 3
-elif int(option) == 3:
-Total Invested = Quantity x Buy In Price
-• Invested Portfolio Size = Percentage of Total Invested/ Sum of Total Invested 
-• Total Current Value = Quantity x Market Price
-• Profit/ Loss = Total Current Value – Total Invested 
-• Current Portfolio Size = Percentage of Total Current Value / Sum of Total Current Valu
-'''
-#random libraries we require , copy , rich for bolded text
+#Importing Libraries (copy , from rich import printprint("[bold red]This text is bold and red.[/bold]")) 
 import copy 
+import csv
 
 #Initialising Variables
 option = ""
@@ -104,26 +8,39 @@ option = ""
 exit = False
 
 input_string = "Select an option: "
-a=r"C:\Users\jeeva\OneDrive\Documents\CA2 elective list.csv"
-filePath=a
+
+cryptolist2 = ["Index","Name","Market Cap","Quantity Bought","Buy In Price","Market Price","E. Edit Complete. Exit"]
+
+#Importing Data from CSV into a 2D List
+
+#filePath = r"C:\Users\jeeva\OneDrive\Documents\CA2 elective list.csv"
+filePath = "C:\\Users\\USER\\Downloads\\CA2 elective list.csv"
+
 file = open(filePath,encoding='utf-8-sig')
 data = file.readlines()
 cryptolist = []
-# start from 1 to ignore 1st line which is the header
 for i in range(len(data)):
   line = data[i]
   cols = line.split(",")
-  Number=cols[0]
-  name = cols[1]
-  Capitalization = cols[2].strip()
-  QtyBought=cols[3].strip()
-  Bought_Price=cols[4].strip()
-  Current_Price=cols[5].strip()
+  name = cols[0] #start from 1 to ignore 1st line which is the header
+  Capitalization = cols[1].strip()
+  QtyBought=cols[2].strip()
+  Bought_Price=cols[3].strip()
+  Current_Price=cols[4].strip()
   x=[name,Capitalization,QtyBought,Bought_Price,Current_Price]
   cryptolist.append(x)
 print(cryptolist)
-cryptolist2 = ["Index","Name","Market Cap","Quantity Bought","Buy In Price","Market Price","E. Edit Complete. Exit"]
-#from rich import printprint("[bold red]This text is bold and red.[/bold]")"""
+
+#Update External Data Storage
+def Update():
+    #filePath = r"C:\Users\jeeva\OneDrive\Documents\CA2 elective list.csv"
+    filePath = "C:\\Users\\USER\\Downloads\\CA2 elective list.csv"
+    file = open(filePath, 'w',encoding='UTF8', newline='')
+    writer = csv.writer(file)
+    for i in cryptolist:
+        writer.writerow(i)
+    file.close()
+
 
 #Main Menu Display
 def Menu():
@@ -147,19 +64,23 @@ def Menu():
 #Option 1: Display Cryptocurrency 
 def DisplayCrypto():
     option1cryptolist=cryptolist.copy()
+    count = 0
     for row in option1cryptolist:
         printedrow = ''
+        if count == 0:
+            printedrow += "No.".ljust(5)
+        else: 
+            printedrow += str(count) + ".".ljust(5)
         for col in row:
-            if True:
-                printedrow += str(col).ljust(17)
+            printedrow += str(col).ljust(17)
+        count +=1
         print(printedrow)
-    print("-"*100)
+    print("-"*80)
     input("Press Enter to Continue")
 
 
 #Option 2: Add CryptoCurrency
 def AddCrypto():
-    f = len(cryptolist)
     while True:
         a = input("Enter Cryptocurrency Name :")
         for i in range(len(cryptolist)):
@@ -184,7 +105,7 @@ def AddCrypto():
             print("Please enter again ")
         else:
             break
-    empty = [f, a, b.capitalize(), c, d, e]
+    empty = [a.capitalize(), b.capitalize(), c, d, e]
     cryptolist.append(empty)
     print("-"*80)
     input("Addition Successful! Press Enter to Continue")
@@ -231,26 +152,32 @@ def AmendCrypto():
                                     case "1":
                                         input_string3 = "(1) Enter new Name of Crypto: "
                                         while True:
+                                            restart = 0
                                             z = input(input_string3)
-                                            for i in range(len(cryptolist)):
-                                                if z.title() == cryptolist[i][1]:
-                                                    print(cryptolist[i][1], "already exists, please enter a new cryptocurrency")
-                                                    input_string3 = str(cryptolist[i][1]) + " already exists, please enter a new cryptocurrency"
-                                                    continue
-                                            cryptolist[int(x)][int(y)] = z
+                                            for i in cryptolist:
+                                                if z.title() in i:
+                                                    input_string3 = z.title() + " already exists, please enter a new cryptocurrency: "
+                                                    restart = 1
+                                            if z == "":
+                                                input_string3 = "Please key in a valid Name: "
+                                                restart = 1
+                                            if restart == 1:
+                                                continue
+                                            cryptolist[int(x)][int(y)-1] = z.capitalize()
                                             input("Amendment Successful! Press Enter to Continue")
                                             break
+
                                     case "2":
                                         input_string3 = "(2) Enter new Market Cap of Crypto: "
                                         while True:
                                             z = input(input_string3)
                                             casecryptolist=("high","low","mid")#using this ignores the bracket nonsense1
                                             if z.lower() not in casecryptolist:
-                                                input_string2 = "Please key in a valid edit (High, Low, Mid)"
+                                                input_string3 = "Please key in a valid edit (High, Low, Mid): "
                                                 continue
                                             z = z.capitalize()
                                             break
-                                        cryptolist[int(x)][int(y)] = z
+                                        cryptolist[int(x)][int(y)-1] = z
                                         input("Amendment Successful! Press Enter to Continue")
                                         break
                                         
@@ -264,7 +191,7 @@ def AmendCrypto():
                                                 input_string3 = "Please key in a valid input: "
                                                 continue
                                             else:
-                                                cryptolist[int(x)][int(y)] = z
+                                                cryptolist[int(x)][int(y)-1] = z
                                                 input("Amendment Successful! Press Enter to Continue")
                                                 break
 
@@ -278,7 +205,7 @@ def AmendCrypto():
                                                 input_string3 = "Please key in a valid input: "
                                                 continue
                                             else:
-                                                cryptolist[int(x)][int(y)] = z
+                                                cryptolist[int(x)][int(y)-1] = z
                                                 input("Amendment Successful! Press Enter to Continue")
                                                 break
                                     case "5": 
@@ -291,7 +218,7 @@ def AmendCrypto():
                                                 input_string3 = "Please key in a valid input: "
                                                 continue
                                             else:
-                                                cryptolist[int(x)][int(y)] = z
+                                                cryptolist[int(x)][int(y)-1] = z
                                                 input("Amendment Successful! Press Enter to Continue")
                                                 break
                                                 
@@ -362,6 +289,7 @@ for i in range(1,7):#starting at 1 since we dont take the headings in caluclatio
     extrafunction=[totalinvested,str(round(totalportfoilosize,2))+"%",Sumcurrentvalue,profitloss,str(round(currentportfoilosize,2))+"%"]
     if len(option5cryptolist)==len(cryptolist):#here making sure the option5cryptolist doesnt add to itself ,only the first time it will extend. got a few issues tho 
         option5cryptolist[i].extend(extrafunction)
+
 def CryptoPortfolioStatement():
     for row_index, row in enumerate(option5cryptolist):
         printedrow = ''
@@ -372,6 +300,8 @@ def CryptoPortfolioStatement():
             else:
                 printedrow += str(col).ljust(17)
         print(printedrow)
+    print("-"*80)
+    input("Press Enter to Continue")
 
 
 #Option 6: Student 1
@@ -417,7 +347,7 @@ def Student2():
     
 while True:
     Menu()
-    option = input(input_string)
+    option = input(input_string).upper()
     input_string = "Select an option: "
     match option:
         case "1":
@@ -436,8 +366,10 @@ while True:
         case "7":
             break
         case "E":
+            Update()
             break
         case _:
             input_string = "Please select an existing option: "
-            
+
+
         
