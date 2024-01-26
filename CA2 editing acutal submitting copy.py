@@ -14,8 +14,8 @@ cryptolist2 = ["Index","Name","Market Cap","Quantity Bought","Buy In Price","Mar
 #Importing Data from CSV into a 2D List
 
 #filePath = r"C:\Users\jeeva\OneDrive\Documents\CA2 elective list.csv"
-#filePath = "C:\\Users\\USER\\Downloads\\CA2 elective list.csv"
-filePath = "C:\\Users\\Edison\\Downloads\\CA2 elective list.csv"
+filePath = "C:\\Users\\USER\\Downloads\\CA2 elective list.csv"
+#filePath = "C:\\Users\\Edison\\Downloads\\CA2 elective list.csv"
 
 file = open(filePath,encoding='utf-8-sig')
 data = file.readlines()
@@ -46,7 +46,7 @@ def Update():
 #Main Menu Display
 def Menu():
     print("-"*80)
-    print("\tClass 02\n \t1. Jeeva \n \t2. Edison") 
+    print("\tClass 02\n \t1. Saravanan Jeeva 2215338  \n  \t2. Edison Khoo Yi Sheng 2119122") 
     print("-"*80)
     print("\tCryptocurrency Portfolio Application Main Menu")
     print("-"*80)
@@ -269,7 +269,7 @@ def RemoveCrypto():
         
 
 #Option 5: Crypto Portfolio Statement
-option5cryptolist=cryptolist#making a cryptolist that wouldnt change 
+option5cryptolist=cryptolist.copy()#making a cryptolist that wouldnt change 
 currentadditioncryptolist=[]
 totalvalue=[]
 for i in range(1,7):#starting at 1 since we dont take the headings in caluclation
@@ -277,10 +277,11 @@ for i in range(1,7):#starting at 1 since we dont take the headings in caluclatio
     Sumcurrentvalue = float(cryptolist[i][2]) * float(cryptolist[i][4])
     currentadditioncryptolist.append(Sumcurrentvalue)
     totalvalue.append(totalinvested)
-v=["total invested","invested ","Portfolio Size","Total Current","Value Profit/ Loss Current","Portfolio Size"]
+v=["total invested  invested Portfolio  Total Current  Value Profit Loss current  Portfolio"]
+# [['total invested'], ['invested'], ['Portfolio'], ['Total'], 'Current'], ['Value'], ['Profit]', ['Loss' 'current'], ['Portfolio']]
 option5cryptolist[0].extend(v)
 
-for i in range(1,7):#starting at 1 since we dont take the headings in caluclation
+for i in range(1,7):#starting at 1 since we dont take the headings in caluclation5
     totalinvested = float(cryptolist[i][2]) * float(cryptolist[i][3])
     Sumcurrentvalue = float(cryptolist[i][2]) * float(cryptolist[i][4])
     profitloss=Sumcurrentvalue-totalinvested
@@ -299,7 +300,7 @@ def CryptoPortfolioStatement():
                 printedrow += str(col).ljust(17)
             else:
                 printedrow += str(col).ljust(17)
-        print(printedrow)
+        print(printedrow)  # Right-align with 2 decimal places
     print("-"*80)
     input("Press Enter to Continue")
 
@@ -367,6 +368,7 @@ while True:
             break
         case "E":
             Update()
+            print("It has updated")
             break
         case _:
             input_string = "Please select an existing option: "
