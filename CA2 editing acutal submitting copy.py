@@ -14,7 +14,8 @@ cryptolist2 = ["Index","Name","Market Cap","Quantity Bought","Buy In Price","Mar
 #Importing Data from CSV into a 2D List
 
 #filePath = r"C:\Users\jeeva\OneDrive\Documents\CA2 elective list.csv"
-filePath = "C:\\Users\\USER\\Downloads\\CA2 elective list.csv"
+#filePath = "C:\\Users\\USER\\Downloads\\CA2 elective list.csv"
+filePath = "C:\\Users\\Edison\\Downloads\\CA2 elective list.csv"
 
 file = open(filePath,encoding='utf-8-sig')
 data = file.readlines()
@@ -268,8 +269,7 @@ def RemoveCrypto():
         
 
 #Option 5: Crypto Portfolio Statement
-
-option5cryptolist=copy.deepcopy(cryptolist)#making a cryptolist that wouldnt change 
+option5cryptolist=cryptolist#making a cryptolist that wouldnt change 
 currentadditioncryptolist=[]
 totalvalue=[]
 for i in range(1,7):#starting at 1 since we dont take the headings in caluclation
