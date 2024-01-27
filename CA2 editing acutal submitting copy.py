@@ -290,6 +290,15 @@ for i in range(1,7):#starting at 1 since we dont take the headings in caluclatio
     extrafunction=[totalinvested,str(round(totalportfoilosize,2))+"%",Sumcurrentvalue,profitloss,str(round(currentportfoilosize,2))+"%"]
     if len(option5cryptolist)==len(cryptolist):#here making sure the option5cryptolist doesnt add to itself ,only the first time it will extend. got a few issues tho 
         option5cryptolist[i].extend(extrafunction)
+print(option5cryptolist)
+sumlist=[]
+totalcurrentvaluelist=[]
+profitlosslist=[]
+for i in range(1,len(option5cryptolist)):
+   sumlist.append(option5cryptolist[i][5])
+   totalcurrentvaluelist.append(option5cryptolist[i][7])
+   profitlosslist.append(option5cryptolist[i][8])
+print(profitlosslist)
 
 def CryptoPortfolioStatement():
     for row_index, row in enumerate(option5cryptolist):
@@ -301,9 +310,9 @@ def CryptoPortfolioStatement():
             else:
                 printedrow += str(col).ljust(17)
         print(printedrow)  # Right-align with 2 decimal places
+    print("{:<75} {:<15} {:<33} {:<20}".format("", "SUM", sum(sumlist), sum(totalcurrentvaluelist),sum(profitlosslist)))
     print("-"*80)
     input("Press Enter to Continue")
-
 
 #Option 6: Student 1
 def Student1():
