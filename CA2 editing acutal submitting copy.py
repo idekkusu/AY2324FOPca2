@@ -310,7 +310,7 @@ def CryptoPortfolioStatement():
             else:
                 printedrow += str(col).ljust(17)
         print(printedrow)  # Right-align with 2 decimal places
-    print("{:<75} {:<15} {:<33} {:<20}".format("", "SUM", sum(sumlist), sum(totalcurrentvaluelist),sum(profitlosslist)))
+    print("{:<75} {:<15} {:<33} {:<18}{:<8}".format("", "SUM", sum(sumlist), sum(totalcurrentvaluelist),sum(profitlosslist)))#so the brackets indicate how many spaces to put beteween the things , the commas added to make it eaiser 
     print("-"*80)
     input("Press Enter to Continue")
 
