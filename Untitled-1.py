@@ -1,44 +1,16 @@
-#filePath = r"C:\Users\jeeva\OneDrive\Documents\CA2 elective list.csv"
-filePath = "C:\\Users\\USER\\Downloads\\CA2 elective list.csv"
+Marks = [['Benny',89,45,55],["Robin",56,86,23],["Sally",88,81,73],["Aaron",35,75,29],["Simon",65,62,77]]
+print(Marks[2][0] , Marks[2][1])
 
+for i in Marks:
+    print(i[0] , i[1])
 
-
-
-file = open(filePath,encoding='utf-8-sig')
-data = file.readlines()
-
-
-cryptolist = []
-cryptolistheader = data[0]
-cryptolistheader = cryptolistheader.split(",")
-for i in range(len(cryptolistheader)):
-    cryptolistheader[i] = cryptolistheader[i].strip('\n')
-
-print(cryptolistheader)
-
-
-CryptoList = []
-for i in range(len(data)-1):
-    line = data[i+1]
-    line = line.split(",")
-
-    count = 0
-    AppendDict = {}
-    for r in line:
-        AppendDict[cryptolistheader[count]] = r.strip('\n')
-        count+=1
-    CryptoList.append(AppendDict)
-
-print(CryptoList)
-
-
-for i in range(len(data)):
-  line = data[i]
-  cols = line.split(",")
-  name = cols[0] #start from 1 to ignore 1st line which is the header
-  Capitalization = cols[1].strip()
-  QtyBought=cols[2].strip()
-  Bought_Price=cols[3].strip()
-  Current_Price=cols[4].strip()
-  x=[name,Capitalization,QtyBought,Bought_Price,Current_Price]
-  cryptolist.append(x)
+for r in Marks:
+    print(r[0],end=" ")
+    total = 0
+    for f in i:
+        try:
+            f = int(f)
+            total+=f
+        except:
+            continue
+    print(total/3)

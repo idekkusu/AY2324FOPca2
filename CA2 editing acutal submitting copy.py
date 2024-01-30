@@ -269,6 +269,7 @@ def RemoveCrypto():
         
 
 #Option 5: Crypto Portfolio Statement
+        #remind edison to look at this
 option5cryptolist=cryptolist.copy()#making a cryptolist that wouldnt change 
 currentadditioncryptolist=[]
 totalvalue=[]
@@ -349,8 +350,130 @@ def Student1():
 
 #Option 7: Student 2
 def Student2():
-    print('why')
+    print('No - CryptoCurrency')
+    print('-'*80)
+    for i in range(len(cryptolist)):
+        if i == 0:
+            continue
+        print(i ,"-", cryptolist[i][0])
+    input_string = "Enter Name of Cryptocurrency for your selection or 'E' to exit: "
+    option_chosen = input(input_string)
+    print('-'*80)
 
+    import numpy as np
+    import pandas as pd
+    import torch
+    import torch.nn as nn
+    from sklearn.preprocessing import MinMaxScaler
+    from sklearn.model_selection import train_test_split
+    from torch.utils.data import DataLoader, TensorDataset
+
+    # Load your dataset
+    try:
+        df = pd.read_csv("Data/" + option_chosen + ".csv") 
+
+    except:
+        print("No Historical Data")
+        return
+
+    # Select the column to predict
+    price = df['Close'].values.reshape(-1, 1)
+    date = df['Date'].values.reshape(-1, 1)
+
+    # Normalize the data
+    scaler = MinMaxScaler(feature_range=(0, 1))
+    price_scaled = scaler.fit_transform(price)
+
+    # Split data into X (features) and y (target)
+    def create_dataset(data, time_step=1):
+        X, y = [], []
+        for i in range(len(data) - time_step - 1):
+            a = data[i:(i + time_step), 0]
+            X.append(a)
+            y.append(data[i + time_step, 0])
+        return np.array(X), np.array(y)
+
+    time_step = 100
+    X, y = create_dataset(price_scaled, time_step)
+
+    # Split into train and test sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    # Convert to PyTorch tensors
+    X_train = torch.tensor(X_train).float().unsqueeze(-1)
+    y_train = torch.tensor(y_train).float()
+    X_test = torch.tensor(X_test).float().unsqueeze(-1)
+    y_test = torch.tensor(y_test).float()
+
+    # Create DataLoaders
+    train_data = TensorDataset(X_train, y_train)
+    test_data = TensorDataset(X_test, y_test)
+    train_loader = DataLoader(train_data, batch_size=32, shuffle=True)
+    test_loader = DataLoader(test_data, batch_size=32, shuffle=False)
+
+    class LSTMModel(nn.Module):
+        def __init__(self, input_size=1, hidden_layer_size=50, output_size=1):
+            super().__init__()
+            self.hidden_layer_size = hidden_layer_size
+
+            self.lstm = nn.LSTM(input_size, hidden_layer_size)
+
+            self.linear = nn.Linear(hidden_layer_size, output_size)
+
+        def forward(self, input_seq):
+            lstm_out, _ = self.lstm(input_seq.view(len(input_seq), -1, 1))
+            predictions = self.linear(lstm_out.view(len(input_seq), -1))
+            return predictions[-1]
+
+    model = LSTMModel()
+    loss_function = nn.MSELoss()
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+
+    epochs = 100
+
+    for i in range(epochs):
+        for inputs, labels in train_loader:
+            optimizer.zero_grad()
+            y_pred = model(inputs)
+            single_loss = loss_function(y_pred, labels)
+            single_loss.backward()
+            optimizer.step()
+
+    model.eval()
+    test_predictions = []
+
+    with torch.no_grad():
+        for inputs, labels in test_loader:
+            y_pred = model(inputs)
+            test_predictions.append(y_pred.numpy())
+
+    # Flatten the list of predictions
+    test_predictions = np.array(test_predictions).flatten()
+
+    # Invert predictions
+    test_predictions = scaler.inverse_transform(test_predictions.reshape(-1, 1))
+
+    import matplotlib.pyplot as plt
+
+    def evaluate_model(y_true, y_pred, title='Model Evaluation'):
+        """
+        Plots the actual vs predicted values for model evaluation.
+
+        Args:
+        y_true (array-like): The actual values.
+        y_pred (array-like): The predicted values from the model.
+        title (str): The title of the plot.
+        """
+        plt.figure(figsize=(12, 6))
+        plt.plot(y_true, label='Actual', color='blue')
+        plt.plot(y_pred, label='Predicted', color='red')
+        plt.title(title)
+        plt.xlabel('Time')
+        plt.ylabel('Value')
+        plt.legend()
+        plt.show()
+    
+    input("Press Enter to Continue")
 
 
 #MAIN PROGRAMME
@@ -372,9 +495,8 @@ while True:
             CryptoPortfolioStatement()
         case "6":
             Student1()
-            break
         case "7":
-            break
+            Student2()
         case "E":
             Update()
             print("It has updated")
