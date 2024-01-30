@@ -314,8 +314,7 @@ def CryptoPortfolioStatement():
 
 #Option 6: Student 1
 def Student1():
-    print('why')
-    option5cryptolist=copy.deepcopy(cryptolist)
+    option5cryptolist=copy.deepcopy(cryptolist)# makes a list that doesnt change 
     currentadditioncryptolist=[]
     totalvalue=[]
     for i in range(1,len(cryptolist)):#starting at 1 since we dont take the headings in caluclation
