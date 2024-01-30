@@ -270,38 +270,35 @@ def RemoveCrypto():
 
 #Option 5: Crypto Portfolio Statement
         #remind edison to look at this
-option5cryptolist=cryptolist.copy()#making a cryptolist that wouldnt change 
-currentadditioncryptolist=[]
-totalvalue=[]
-for i in range(1,7):#starting at 1 since we dont take the headings in caluclation
-    totalinvested = float(cryptolist[i][2]) * float(cryptolist[i][3])
-    Sumcurrentvalue = float(cryptolist[i][2]) * float(cryptolist[i][4])
-    currentadditioncryptolist.append(Sumcurrentvalue)
-    totalvalue.append(totalinvested)
-v=["total invested  invested Portfolio  Total Current  Value Profit Loss current  Portfolio"]
-# [['total invested'], ['invested'], ['Portfolio'], ['Total'], 'Current'], ['Value'], ['Profit]', ['Loss' 'current'], ['Portfolio']]
-option5cryptolist[0].extend(v)
-
-for i in range(1,7):#starting at 1 since we dont take the headings in caluclation5
-    totalinvested = float(cryptolist[i][2]) * float(cryptolist[i][3])
-    Sumcurrentvalue = float(cryptolist[i][2]) * float(cryptolist[i][4])
-    profitloss=Sumcurrentvalue-totalinvested
-    currentportfoilosize=Sumcurrentvalue/sum(currentadditioncryptolist)*100
-    totalportfoilosize=totalinvested/sum(totalvalue)*100
-    extrafunction=[totalinvested,str(round(totalportfoilosize,2))+"%",Sumcurrentvalue,profitloss,str(round(currentportfoilosize,2))+"%"]
-    if len(option5cryptolist)==len(cryptolist):#here making sure the option5cryptolist doesnt add to itself ,only the first time it will extend. got a few issues tho 
-        option5cryptolist[i].extend(extrafunction)
-print(option5cryptolist)
-sumlist=[]
-totalcurrentvaluelist=[]
-profitlosslist=[]
-for i in range(1,len(option5cryptolist)):
-   sumlist.append(option5cryptolist[i][5])
-   totalcurrentvaluelist.append(option5cryptolist[i][7])
-   profitlosslist.append(option5cryptolist[i][8])
-print(profitlosslist)
-
 def CryptoPortfolioStatement():
+    #making a cryptolist that wouldnt change 
+    option5cryptolist=copy.deepcopy(cryptolist)
+    currentadditioncryptolist=[]
+    totalvalue=[]
+    for i in range(1,len(cryptolist)):#starting at 1 since we dont take the headings in caluclation
+        totalinvested = float(cryptolist[i][2]) * float(cryptolist[i][3])
+        Sumcurrentvalue = float(cryptolist[i][2]) * float(cryptolist[i][4])
+        currentadditioncryptolist.append(Sumcurrentvalue)
+        totalvalue.append(totalinvested)
+    v=["total invested  invested Portfolio  Total Current  Value Profit Loss current  Portfolio"]
+    # [['total invested'], ['invested'], ['Portfolio'], ['Total'], 'Current'], ['Value'], ['Profit]', ['Loss' 'current'], ['Portfolio']]
+    option5cryptolist[0].extend(v)
+    for i in range(1,len(cryptolist)):#starting at 1 since we dont take the headings in caluclation5
+        totalinvested = float(cryptolist[i][2]) * float(cryptolist[i][3])
+        Sumcurrentvalue = float(cryptolist[i][2]) * float(cryptolist[i][4])
+        profitloss=Sumcurrentvalue-totalinvested
+        currentportfoilosize=Sumcurrentvalue/sum(currentadditioncryptolist)*100
+        totalportfoilosize=totalinvested/sum(totalvalue)*100
+        extrafunction=[totalinvested,str(round(totalportfoilosize,2))+"%",Sumcurrentvalue,profitloss,str(round(currentportfoilosize,2))+"%"]
+        if len(option5cryptolist)==len(cryptolist):#here making sure the option5cryptolist doesnt add to itself ,only the first time it will extend. got a few issues tho 
+            option5cryptolist[i].extend(extrafunction)
+    sumlist=[]
+    totalcurrentvaluelist=[]
+    profitlosslist=[]
+    for i in range(1,len(option5cryptolist)):
+        sumlist.append(option5cryptolist[i][5])
+        totalcurrentvaluelist.append(option5cryptolist[i][7])
+        profitlosslist.append(option5cryptolist[i][8])
     for row_index, row in enumerate(option5cryptolist):
         printedrow = ''
         for col_index, col in enumerate(row):#got error, theres a spacing here + the first section supposed to be No
@@ -318,7 +315,28 @@ def CryptoPortfolioStatement():
 #Option 6: Student 1
 def Student1():
     print('why')
+    option5cryptolist=copy.deepcopy(cryptolist)
+    currentadditioncryptolist=[]
+    totalvalue=[]
+    for i in range(1,len(cryptolist)):#starting at 1 since we dont take the headings in caluclation
+        totalinvested = float(cryptolist[i][2]) * float(cryptolist[i][3])
+        Sumcurrentvalue = float(cryptolist[i][2]) * float(cryptolist[i][4])
+        currentadditioncryptolist.append(Sumcurrentvalue)
+        totalvalue.append(totalinvested)
+    v=["total invested  invested Portfolio  Total Current  Value Profit Loss current  Portfolio"]
+    # [['total invested'], ['invested'], ['Portfolio'], ['Total'], 'Current'], ['Value'], ['Profit]', ['Loss' 'current'], ['Portfolio']]
+    option5cryptolist[0].extend(v)
+    for i in range(1,len(cryptolist)):#starting at 1 since we dont take the headings in caluclation5
+        totalinvested = float(cryptolist[i][2]) * float(cryptolist[i][3])
+        Sumcurrentvalue = float(cryptolist[i][2]) * float(cryptolist[i][4])
+        profitloss=Sumcurrentvalue-totalinvested
+        currentportfoilosize=Sumcurrentvalue/sum(currentadditioncryptolist)*100
+        totalportfoilosize=totalinvested/sum(totalvalue)*100
+        extrafunction=[totalinvested,str(round(totalportfoilosize,2))+"%",Sumcurrentvalue,profitloss,str(round(currentportfoilosize,2))+"%"]
+        if len(option5cryptolist)==len(cryptolist):#here making sure the option5cryptolist doesnt add to itself ,only the first time it will extend. got a few issues tho 
+            option5cryptolist[i].extend(extrafunction)
     option7cryptolist=[]
+    #since we using the option 5 code again 
     for i in range(1,len(option5cryptolist)):
         option7cryptolist.append(option5cryptolist[i][0])
         option7cryptolist.append(option5cryptolist[i][8])
@@ -347,7 +365,7 @@ def Student1():
 
     # Show the figure
     fig.show()
-
+"""
 #Option 7: Student 2
 def Student2():
     print('No - CryptoCurrency')
@@ -456,14 +474,14 @@ def Student2():
     import matplotlib.pyplot as plt
 
     def evaluate_model(y_true, y_pred, title='Model Evaluation'):
-        """
+        """"""
         Plots the actual vs predicted values for model evaluation.
 
         Args:
         y_true (array-like): The actual values.
         y_pred (array-like): The predicted values from the model.
         title (str): The title of the plot.
-        """
+        """"""
         plt.figure(figsize=(12, 6))
         plt.plot(y_true, label='Actual', color='blue')
         plt.plot(y_pred, label='Predicted', color='red')
@@ -474,7 +492,7 @@ def Student2():
         plt.show()
     
     input("Press Enter to Continue")
-
+"""
 
 #MAIN PROGRAMME
     
@@ -495,9 +513,9 @@ while True:
             CryptoPortfolioStatement()
         case "6":
             Student1()
-        case "7":
-            Student2()
-        case "E":
+        case "7" :
+            #tjs
+        #case "E":
             Update()
             print("It has updated")
             break
