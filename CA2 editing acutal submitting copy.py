@@ -298,6 +298,7 @@ def CryptoPortfolioStatement():
     sumlist=[]
     totalcurrentvaluelist=[]
     profitlosslist=[]
+    count1 = 0
     for i in range(1,len(option5cryptolist)):
         sumlist.append(option5cryptolist[i][5])
         totalcurrentvaluelist.append(option5cryptolist[i][7])
@@ -306,7 +307,11 @@ def CryptoPortfolioStatement():
         printedrow = ''
         for col_index, col in enumerate(row):#got error, theres a spacing here + the first section supposed to be No
             if col_index == 0:         
-                printedrow += str(row_index).ljust(7)
+                if count1 ==0:
+                    printedrow+= "No.".ljust(7)
+                    count1+=1
+                else:
+                    printedrow += str(row_index).ljust(7)
                 printedrow += str(col).ljust(17)
             else:
                 printedrow += str(col).ljust(17)
@@ -367,7 +372,7 @@ def Student1():
 
     # Show the figure
     fig.show()
-"""
+
 #Option 7: Student 2
 def Student2():
     print('No - CryptoCurrency')
@@ -380,121 +385,107 @@ def Student2():
     option_chosen = input(input_string)
     print('-'*80)
 
-    import numpy as np
     import pandas as pd
-    import torch
-    import torch.nn as nn
+    import numpy as np
     from sklearn.preprocessing import MinMaxScaler
+    from keras.models import Sequential
+    from keras.layers import LSTM, Dense
     from sklearn.model_selection import train_test_split
-    from torch.utils.data import DataLoader, TensorDataset
-
-    # Load your dataset
-    try:
-        df = pd.read_csv("Data/" + option_chosen + ".csv") 
-
-    except:
-        print("No Historical Data")
-        return
-
-    # Select the column to predict
-    price = df['Close'].values.reshape(-1, 1)
-    date = df['Date'].values.reshape(-1, 1)
-
-    # Normalize the data
-    scaler = MinMaxScaler(feature_range=(0, 1))
-    price_scaled = scaler.fit_transform(price)
-
-    # Split data into X (features) and y (target)
-    def create_dataset(data, time_step=1):
-        X, y = [], []
-        for i in range(len(data) - time_step - 1):
-            a = data[i:(i + time_step), 0]
-            X.append(a)
-            y.append(data[i + time_step, 0])
-        return np.array(X), np.array(y)
-
-    time_step = 100
-    X, y = create_dataset(price_scaled, time_step)
-
-    # Split into train and test sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-    # Convert to PyTorch tensors
-    X_train = torch.tensor(X_train).float().unsqueeze(-1)
-    y_train = torch.tensor(y_train).float()
-    X_test = torch.tensor(X_test).float().unsqueeze(-1)
-    y_test = torch.tensor(y_test).float()
-
-    # Create DataLoaders
-    train_data = TensorDataset(X_train, y_train)
-    test_data = TensorDataset(X_test, y_test)
-    train_loader = DataLoader(train_data, batch_size=32, shuffle=True)
-    test_loader = DataLoader(test_data, batch_size=32, shuffle=False)
-
-    class LSTMModel(nn.Module):
-        def __init__(self, input_size=1, hidden_layer_size=50, output_size=1):
-            super().__init__()
-            self.hidden_layer_size = hidden_layer_size
-
-            self.lstm = nn.LSTM(input_size, hidden_layer_size)
-
-            self.linear = nn.Linear(hidden_layer_size, output_size)
-
-        def forward(self, input_seq):
-            lstm_out, _ = self.lstm(input_seq.view(len(input_seq), -1, 1))
-            predictions = self.linear(lstm_out.view(len(input_seq), -1))
-            return predictions[-1]
-
-    model = LSTMModel()
-    loss_function = nn.MSELoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
-
-    epochs = 100
-
-    for i in range(epochs):
-        for inputs, labels in train_loader:
-            optimizer.zero_grad()
-            y_pred = model(inputs)
-            single_loss = loss_function(y_pred, labels)
-            single_loss.backward()
-            optimizer.step()
-
-    model.eval()
-    test_predictions = []
-
-    with torch.no_grad():
-        for inputs, labels in test_loader:
-            y_pred = model(inputs)
-            test_predictions.append(y_pred.numpy())
-
-    # Flatten the list of predictions
-    test_predictions = np.array(test_predictions).flatten()
-
-    # Invert predictions
-    test_predictions = scaler.inverse_transform(test_predictions.reshape(-1, 1))
-
+    from datetime import timedelta
+    import matplotlib.dates as mdates
     import matplotlib.pyplot as plt
 
-    def evaluate_model(y_true, y_pred, title='Model Evaluation'):
-        """"""
-        Plots the actual vs predicted values for model evaluation.
 
-        Args:
-        y_true (array-like): The actual values.
-        y_pred (array-like): The predicted values from the model.
-        title (str): The title of the plot.
-        """"""
-        plt.figure(figsize=(12, 6))
-        plt.plot(y_true, label='Actual', color='blue')
-        plt.plot(y_pred, label='Predicted', color='red')
-        plt.title(title)
-        plt.xlabel('Time')
-        plt.ylabel('Value')
-        plt.legend()
-        plt.show()
-    
+    # Load the data
+    cryptoDf = pd.read_csv("Data/" + option_chosen + ".csv")
+    cryptoDf['Date'] = pd.to_datetime(cryptoDf['Date'])
+
+    # Normalizing the 'Close' values
+    scaler = MinMaxScaler(feature_range=(0, 1))
+    scaled_close = scaler.fit_transform(cryptoDf['Close'].values.reshape(-1, 1))
+
+    # Define the time step
+    time_step = 100
+    X, y = [], []
+
+    # Create sequences manually
+    for i in range(time_step, len(scaled_close)):
+        X.append(scaled_close[i - time_step:i, 0])
+        y.append(scaled_close[i, 0])
+
+    X, y = np.array(X), np.array(y)
+
+    # Reshape input to be [samples, time steps, features]
+    X = X.reshape(X.shape[0], X.shape[1], 1)
+
+    # Calculate the split index
+    split_idx = int(len(X) * 0.7)
+
+    # Splitting the data into train and test sets
+    X_train, X_test = X[:split_idx], X[split_idx:]
+    y_train, y_test = y[:split_idx], y[split_idx:]
+
+    # Create the LSTM model
+    model = Sequential()
+    model.add(LSTM(units=50, return_sequences=True, input_shape=(time_step, 1)))
+    model.add(LSTM(units=50, return_sequences=False))
+    model.add(Dense(units=1))
+
+    model.compile(optimizer='adam', loss='mean_squared_error')
+
+    # Train the model
+    model.fit(X_train, y_train, epochs=20, batch_size=32, verbose=2)
+
+    # Predictions
+    train_predict = model.predict(X_train)
+    test_predict = model.predict(X_test)
+
+    # Inverse transform to get actual values
+    train_predict = scaler.inverse_transform(train_predict)
+    test_predict = scaler.inverse_transform(test_predict)
+
+
+    def iterative_predictions(model, start_data, start_date, target_date, scaler, time_step):
+        # Calculate the number of days to predict
+        days_to_predict = (target_date - start_date).days
+
+        # Prepare the initial input data
+        current_input = start_data[-time_step:]
+
+        # Iteratively predict the next price
+        for _ in range(days_to_predict):
+            # Reshape and predict the next point
+            next_point = model.predict(current_input.reshape((1, -1, 1)))
+            # Append the prediction and remove the first element
+            current_input = np.append(current_input, next_point)[1:]
+
+        # Inverse transform the last prediction to get the actual price
+        predicted_price = scaler.inverse_transform(next_point)
+
+        return predicted_price[0, 0]
+
+    # Ensure 'Date' column is in datetime format
+    cryptoDf['Date'] = pd.to_datetime(cryptoDf['Date'])
+
+    # Input the target date for prediction
+    input_date_str = '2023-01-01'  # Modify as per your requirement
+    target_date = pd.to_datetime(input_date_str)
+
+    # Ensure the target date is after the last date in your dataset
+    last_date_in_data = cryptoDf['Date'].iloc[-1]
+    if target_date <= last_date_in_data:
+        print("Target date should be after the last date in the dataset.")
+    else:
+        # Get the most recent 'time_step' data points
+        recent_data = scaled_close[-time_step:]
+
+        # Predict the price for the target date
+        predicted_price = iterative_predictions(model, recent_data, last_date_in_data, target_date, scaler, time_step)
+        input_date_str = input("Please input the date in the format of yy/mm/dd: ")
+        print(f"Predicted price for {input_date_str}: {predicted_price} USD")
+        
     input("Press Enter to Continue")
-"""
+
 
 #MAIN PROGRAMME
     
@@ -516,8 +507,8 @@ while True:
         case "6":
             Student1()
         case "7" :
-            #tjs
-        #case "E":
+            Student2()
+        case "E":
             Update()
             print("It has updated")
             break
