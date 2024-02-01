@@ -280,7 +280,10 @@ def CryptoPortfolioStatement():
         Sumcurrentvalue = float(cryptolist[i][2]) * float(cryptolist[i][4])
         currentadditioncryptolist.append(Sumcurrentvalue)
         totalvalue.append(totalinvested)
-    v=["total invested  invested Portfolio  Total Current  Value Profit Loss current  Portfolio"]
+    v=["""Total        Invested          Total Current       Profit/Loss   Current
+                                                                                          Invested       Portfolio Size       Value                         Portfolio size """]
+    
+
     # [['total invested'], ['invested'], ['Portfolio'], ['Total'], 'Current'], ['Value'], ['Profit]', ['Loss' 'current'], ['Portfolio']]
     option5cryptolist[0].extend(v)
     for i in range(1,len(cryptolist)):#starting at 1 since we dont take the headings in caluclation5
