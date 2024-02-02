@@ -375,16 +375,31 @@ def Student1():
 
 #Option 7: Student 2
 def Student2():
+
+    #Display Table and Selection Prompt
     print('No - CryptoCurrency')
     print('-'*80)
     for i in range(len(cryptolist)):
         if i == 0:
             continue
         print(i ,"-", cryptolist[i][0])
-    input_string = "Enter Name of Cryptocurrency for your selection or 'E' to exit: "
-    option_chosen = input(input_string)
     print('-'*80)
+    input_string = "Enter 1 to " + str(len(cryptolist)-1) +  " for your selection or 'E' to exit: "
+    while True: #Input validation
+        crypto_chosen = input(input_string)
+        if crypto_chosen.isnumeric() == False:
+            print("Please key in a proper input")
+            continue
+        elif int(crypto_chosen) <= 0 or int(crypto_chosen)> (len(cryptolist)-1):
+            print("Please key in a proper input")
+            continue
+        else:
+            break
+    option_chosen = cryptolist[int(crypto_chosen)][0]
+    input_date_str = input("Please input the date in the format of yy/mm/dd: ")
 
+
+    #Importing Modules. Import here so it can do the loading all at once.
     import pandas as pd
     import numpy as np
     from sklearn.preprocessing import MinMaxScaler
@@ -394,7 +409,6 @@ def Student2():
     from datetime import timedelta
     import matplotlib.dates as mdates
     import matplotlib.pyplot as plt
-
 
     # Load the data
     cryptoDf = pd.read_csv("Data/" + option_chosen + ".csv")
@@ -481,7 +495,6 @@ def Student2():
 
         # Predict the price for the target date
         predicted_price = iterative_predictions(model, recent_data, last_date_in_data, target_date, scaler, time_step)
-        input_date_str = input("Please input the date in the format of yy/mm/dd: ")
         print(f"Predicted price for {input_date_str}: {predicted_price} USD")
         
     input("Press Enter to Continue")
