@@ -1,6 +1,7 @@
 #Importing Libraries (copy , from rich import printprint("[bold red]This text is bold and red.[/bold]")) 
 import copy 
 import csv
+import re
 
 #Initialising Variables
 option = ""
@@ -30,7 +31,6 @@ for i in range(len(data)):
   Current_Price=cols[4].strip()
   x=[name,Capitalization,QtyBought,Bought_Price,Current_Price]
   cryptolist.append(x)
-print(cryptolist)
 
 #Update External Data Storage
 def Update():
@@ -46,18 +46,18 @@ def Update():
 #Main Menu Display
 def Menu():
     print("-"*80)
-    print("\tClass 02\n \t1. Saravanan Jeeva 2215338  \n  \t2. Edison Khoo Yi Sheng 2119122") 
+    print("\tClass 02\n \t1. Saravanan Jeeva (2215338)  \n  \t2. Edison Khoo Yi Sheng (2119122)\033[37m") 
     print("-"*80)
-    print("\tCryptocurrency Portfolio Application Main Menu")
+    print("\t\033[1m\033[33mCryptocurrency Portfolio Application Main Menu\033[22m\033[37m")
     print("-"*80)
-    intro_text="""    1. Display Cryptocurrency
-    2. Add Cryptocurrency
-    3. Amend Cryptocurrency
-    4. Remove Cryptocurrency
-    5. Crypto Portfolio Statement
-    6. <Student 1 to propose a new function>
-    7. <Student 2 to propose a new function>
-    E. Exit Main Menu"""
+    intro_text="""    1. \033[33mDisplay\033[37m Cryptocurrency
+    2. \033[33mAdd\033[37m Cryptocurrency
+    3. \033[33mAmend\033[37m Cryptocurrency
+    4. \033[33mRemove\033[37m Cryptocurrency
+    5. \033[33mCrypto Portfolio\033[37m Statement
+    6. \033[33mWaterfall\033[37m Graph
+    7. \033[33mPredict\033[37m Price of Cryptocurrency
+    E. \033[31mExit\033[37m Main Menu"""
 
     print(intro_text)
     print("-"*80)
@@ -115,19 +115,19 @@ def AddCrypto():
 
 #Option 3: Amend CryptoCurrency
 def AmendCrypto():
-    print('No - CryptoCurrency')
+    print('\033[1m\033[33mNo - CryptoCurrency\033[22m\033[37m')
     print('-'*80)
     for i in range(len(cryptolist)):
         if i == 0:
             continue
         print(i ,"-", cryptolist[i][0])
-    input_string = "Enter 1 to " + str(len(cryptolist)-1) +  " for your selection or 'E' to exit: "
+    input_string = "Enter 1 to " + str(len(cryptolist)-1) +  " for your selection or '\033[31mE\033[37m' to exit: "
     print('-'*80)
     while True:
         x = input(input_string)
         if x.isnumeric(): #Checking if input is numeric
             if int(x) < 1 or int(x)>len(cryptolist)-1: #checking for out of range
-                input_string = "Please only input 1 to " + str(len(cryptolist)-1) +  " for your selection or 'E' to exit: "
+                input_string = "Please only input 1 to " + str(len(cryptolist)-1) +  " for your selection or '\033[31mE\033[37m' to exit: "
                 continue
             else: #If input is valid
                     i = 0
@@ -146,7 +146,7 @@ def AmendCrypto():
 
                         if y.isnumeric(): #Checking if input is numeric
                             if int(y) < 1 or int(y)>len(cryptolist2)-2: #checking for out of range
-                                input_string2 = "Please only input 1 to " + str(len(cryptolist2)-2) +  " for your selection or 'E' to exit: "
+                                input_string2 = "Please only input 1 to " + str(len(cryptolist2)-2) +  " for your selection or '\033[31mE\033[37m' to exit: "
                                 continue
                             else: #if y is a valid input and is not "E"
                                 match y:
@@ -232,7 +232,7 @@ def AmendCrypto():
                             if y.upper() == 'E': #check for E
                                 break
                             else: #check for other alphabetical input that is not E
-                                input_string2 = "Please only input 1 to " + str(len(cryptolist2)-2) +  " for your selection or 'E' to exit: "
+                                input_string2 = "Please only input 1 to " + str(len(cryptolist2)-2) +  " for your selection or '\033[31mE\033[37m' to exit: "
                                 continue
                     break
 
@@ -240,22 +240,23 @@ def AmendCrypto():
             if x.upper() == 'E': #check for E
                 break
             else: #check for other alphabetical input that is not E
-                input_string = "Please only input 1 to " + str(len(cryptolist)-1) +  " for your selection or 'E' to exit: "
+                input_string = "Please only input 1 to " + str(len(cryptolist)-1) +  " for your selection or '\033[31mE\033[37m' to exit: "
                 continue
+
 #Option 4: Remove CryptoCurrency
 def RemoveCrypto():
-    print('No - CryptoCurrency')
+    print('\033[1m\033[33mNo - CryptoCurrency\033[22m\033[37m')
     print('-'*80)
     for i in range(len(cryptolist)):
         if i == 0:
             continue
         print(i ,"-", cryptolist[i][0])
     print('-'*80)
-    input_string = "Enter 1 to " + str(len(cryptolist)-1) +  " for your selection or 'E' to exit: "
+    input_string = "Enter 1 to " + str(len(cryptolist)-1) +  " for your selection or '\033[31mE\033[37m' to exit: "
     while True:
         x = input(input_string)
         if x.isnumeric() and (int(x) < 1 or int(x)>len(cryptolist)-1): #Checking if input is within numeric options
-            input_string = "Please only input 1 to " + str(len(cryptolist)-1) +  " for your selection or 'E' to exit: "
+            input_string = "Please only input 1 to " + str(len(cryptolist)-1) +  " for your selection or '\033[31mE\033[37m' to exit: "
             continue
         elif x.isalpha() and x.upper()!= "E": # checking for other inputs
             input_string = "Please key in a valid input: "
@@ -269,7 +270,6 @@ def RemoveCrypto():
         
 
 #Option 5: Crypto Portfolio Statement
-        #remind edison to look at this
 def CryptoPortfolioStatement():
     #making a cryptolist that wouldnt change 
     option5cryptolist=copy.deepcopy(cryptolist)
@@ -377,14 +377,14 @@ def Student1():
 def Student2():
 
     #Display Table and Selection Prompt
-    print('No - CryptoCurrency')
+    print('\033[1m\033[33mNo - CryptoCurrency\033[22m\033[37m')
     print('-'*80)
     for i in range(len(cryptolist)):
         if i == 0:
             continue
         print(i ,"-", cryptolist[i][0])
     print('-'*80)
-    input_string = "Enter 1 to " + str(len(cryptolist)-1) +  " for your selection or 'E' to exit: "
+    input_string = "Enter 1 to " + str(len(cryptolist)-1) +  " for your selection or '\033[31mE\033[37m' to exit: "
     while True: #Input validation
         crypto_chosen = input(input_string)
         if crypto_chosen.isnumeric() == False:
@@ -396,8 +396,29 @@ def Student2():
         else:
             break
     option_chosen = cryptolist[int(crypto_chosen)][0]
-    input_date_str = input("Please input the date in the format of yy/mm/dd: ")
 
+#user input and input validation for date of prediction
+
+    # Define the pattern for the date format 'yy/mm/dd'
+    date_pattern = re.compile(r'^\d{2}/(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])$')
+
+    while True:
+    # Get user input
+        input_date_str = input("Please input the date in the format of yy/mm/dd: ")
+
+        # Validate the input against the pattern and additional conditions
+        if date_pattern.match(input_date_str):
+            year, month, day = map(int, input_date_str.split('/'))
+            
+            # Check if month is between 1 and 12
+            if 1 <= month <= 12:
+                # Check if day is between 1 and 31
+                if 1 <= day <= 31:
+                    break
+                    # Further processing or use the input_date_str as needed
+        else:
+            print("Invalid date format. Please ensure your input is in the format yy/mm/dd and that a valid date is chosen.")
+            continue
 
     #Importing Modules. Import here so it can do the loading all at once.
     import pandas as pd
@@ -523,7 +544,7 @@ while True:
             Student2()
         case "E":
             Update()
-            print("It has updated")
+            print("The data has been updated")
             break
         case _:
             input_string = "Please select an existing option: "
